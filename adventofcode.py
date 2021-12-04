@@ -53,8 +53,8 @@ def Day3():
     print(int(g,2)*int(e,2))
     # part 2
 
-    o=list(d)
-    co=list(d)
+    o=d
+    co=d
     i=0
     while len(o) > 1 or len(co) > 1:
 
@@ -74,8 +74,7 @@ def Day3():
             else:
                 co = [x for x in co if x[i]=="1"]
         i += 1
-    print (o)
-    print (co)
+
     print (int(o[0],2) * int(co[0],2))
 
 
