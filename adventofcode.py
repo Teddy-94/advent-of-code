@@ -77,18 +77,33 @@ def Day3():
 
     print (int(o[0],2) * int(co[0],2))
 
-
-    
-
-
 def Day4():
-    print("Hi")
+    with open (".\input4.txt", "r") as f:
+        draws = f.readline().split(",")
+        boards = []
+
+        print(draws)   
+    return
+    
 
 def Day5():
     print("Hi")
 
 def Day6():
-    print("Hi")
+    with open (".\input6.txt", "r") as f: 
+        fish = list(map(int, f.read().split(",")))
+        fishes =[0] * 9
+
+        for i in fish:
+            fishes[i] +=1
+
+        for _ in range(256):
+            zero = fishes[0]
+            fishes = fishes[1:] + [zero]
+            fishes[6] += zero
+    print(sum(fishes))
+
+
 
 def Day7():
     print("Hi")
@@ -150,10 +165,10 @@ def Day25():
 if __name__ == "__main__":
     # Day1()
     # Day2()
-    Day3()
+    # Day3()
     # Day4()
     # Day5()
-    # Day6()
+    Day6()
     # Day7()
     # Day8()
     # Day9()
