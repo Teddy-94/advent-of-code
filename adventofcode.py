@@ -51,8 +51,8 @@ def Day3():
     e="".join(chr(ord(c)^1) for c in g)
     
     print(int(g,2)*int(e,2))
-    # part 2
 
+    # part 2
     o=d
     co=d
     i=0
@@ -90,7 +90,7 @@ def Day5():
     print("Hi")
 
 def Day6():
-    with open (".\input6.txt", "r") as f: 
+    with open (r"D:\Prog\adventofcode\input6.txt", "r") as f: 
         fish = list(map(int, f.read().split(",")))
         fishes =[0] * 9
 
@@ -102,7 +102,6 @@ def Day6():
             fishes = fishes[1:] + [zero]
             fishes[6] += zero
     print(sum(fishes))
-
 
 
 def Day7():
@@ -166,9 +165,9 @@ if __name__ == "__main__":
     # Day1()
     # Day2()
     # Day3()
-    # Day4()
+     Day4()
     # Day5()
-    Day6()
+    # Day6()
     # Day7()
     # Day8()
     # Day9()
