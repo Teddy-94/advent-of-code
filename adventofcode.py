@@ -45,7 +45,9 @@ def Day2():
 
 def Day3():
     # part 1
-    d = []
+    for line in open(".\inputs\input3.txt"):
+        d = [line.split()]
+
     count = [0,0,0,0,0,0,0,0,0,0,0,0]
     
     for line in d:
