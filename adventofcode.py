@@ -1,9 +1,17 @@
 def Day1():
     with open (".\inputs\input1.txt", "r") as f:
-            d = f.read().strip().split("\n")
-    print(len([i for i in range(1,len(d)) if (d[i]>d[i-1])]))
+            d = f.read().strip().splitlines()
+    depth_increases = 0
+    for i in range(1, len(d)):
+        if (d[i] > d[i-1]):
+            depth_increases += 1
+    print(depth_increases)
 
-    print(len([i for i in range(2,len(d)) if (d[i-3]+d[i-2]+d[i-1]<d[i-2]+d[i-1]+d[i])]))
+    depth_increases = 0
+    for i in range(2, len(d)):
+        if (d[i-3]+d[i-2]+d[i-1]<d[i-2]+d[i-1]+d[i]):
+            depth_increases +=1
+    print(depth_increases)
 
 def Day2():
     with open (".\inputs\input2.txt", "r") as f:
@@ -162,7 +170,7 @@ def Day25():
     print("Hi")
 
 if __name__ == "__main__":
-     Day1()
+    # Day1()
     # Day2()
     # Day3()
     # Day4()
@@ -187,3 +195,4 @@ if __name__ == "__main__":
     # Day23()
     # Day24()
     # Day25()
+    print("remember to uncomment a function")
