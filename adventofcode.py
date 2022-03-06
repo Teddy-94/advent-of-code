@@ -45,30 +45,30 @@ def Day2():
 
 def Day3():
     # part 1
-    for line in open(".\inputs\input3.txt"):
-        d = [line.split()]
+    lines = []
+    for d in open(".\inputs\input3.txt"):
+        lines.append(d.splitlines())
 
-    count = [0,0,0,0,0,0,0,0,0,0,0,0]
+    count = [0] * len(lines[0])
     
-    for line in d:
+    for line in lines:
         for i, char in enumerate(line):
             if char == "1":
                 count[i] += 1
             else:
                 count[i] -= 1  
 
-    g = ""
+    gamma = ""
     for i in count:
         if i <= 0:
-            g+="0"
-        else: g+="1"
-    e="".join(chr(ord(c)^1) for c in g)
-    
-    print(int(g,2)*int(e,2))
+            gamma+="0"
+        else: gamma+="1"
+    epsilon="".join(chr(ord(c)^1) for c in gamma)
+    print(int(gamma,2)*int(epsilon,2))
 
     # part 2
-    o=d
-    co=d
+    o=list(lines)
+    co=list(lines)
     i=0
     while len(o) > 1 or len(co) > 1:
 
@@ -177,8 +177,8 @@ def Day25():
 
 if __name__ == "__main__":
     # Day1()
-     Day2()
-    # Day3()
+    # Day2()
+    Day3()
     # Day4()
     # Day5()
     # Day6()
