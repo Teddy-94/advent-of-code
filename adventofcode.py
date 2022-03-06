@@ -14,30 +14,34 @@ def Day1():
     print(depth_increases)
 
 def Day2():
-    with open (".\inputs\input2.txt", "r") as f:
-            d = f.read().strip().split(" ")
-    fwd = depth = aim = 0
-    
-    for i, d in enumerate(d):
-        if d == "forward":
-            fwd +=  f[i]
-        if d == "up":
-            depth += f[i]
-        if d == "down":
-            depth -= f[i]
+    position = depth = 0
+    for line in open (".\inputs\input2.txt"):
+        command, n = line.split(" ")
+        n = int(n)
         
-    print(fwd*abs(depth))
+        if command == "up":
+            depth -=n
+        elif command == "down":
+            depth +=n
+        elif command == "forward":
+            position +=n
 
-    for i, d in enumerate(d):
-        if d == "forward":
-            fwd += f[i]
-            depth += f[i]*aim
-        if d == "up":
-            aim += f[i]
-        if d == "down":
-            aim -= f[i]
-        
-    print(fwd*abs(depth))
+    print (position*depth)
+
+    position = depth = aim = 0
+
+    for line in open (".\inputs\input2.txt"):
+        command, n = line.split(" ")
+        n = int(n)
+
+        if command == "up":
+            aim -= n
+        elif command == "down":
+            aim += n
+        elif command == "forward":
+            position += n
+            depth += n*aim
+    print (position*depth)
 
 def Day3():
     # part 1
