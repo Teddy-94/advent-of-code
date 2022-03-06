@@ -104,7 +104,7 @@ def Day5():
     print("Hi")
 
 def Day6():
-    with open (r"D:\Prog\adventofcode\input6.txt", "r") as f: 
+    with open (".\inputs\input6.txt", "r") as f: 
         fish = list(map(int, f.read().split(",")))
         fishes =[0] * 9
 
@@ -178,10 +178,10 @@ def Day25():
 if __name__ == "__main__":
     # Day1()
     # Day2()
-    Day3()
+    #Day3()
     # Day4()
     # Day5()
-    # Day6()
+     Day6()
     # Day7()
     # Day8()
     # Day9()
