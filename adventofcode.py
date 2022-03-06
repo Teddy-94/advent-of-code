@@ -15,18 +15,18 @@ def Day1():
 
 def Day2():
     with open (".\inputs\input2.txt", "r") as f:
-            d = f.read().strip().split("\n")
+            d = f.read().strip().split(" ")
     fwd = depth = aim = 0
     
-    # for i, d in enumerate(d):
-    #     if d == "forward":
-    #         fwd +=  f[i]
-    #     if d == "up":
-    #         depth += f[i]
-    #     if d == "down":
-    #         depth -= f[i]
+    for i, d in enumerate(d):
+        if d == "forward":
+            fwd +=  f[i]
+        if d == "up":
+            depth += f[i]
+        if d == "down":
+            depth -= f[i]
         
-    # print(fwd*abs(depth))
+    print(fwd*abs(depth))
 
     for i, d in enumerate(d):
         if d == "forward":
@@ -171,7 +171,7 @@ def Day25():
 
 if __name__ == "__main__":
     # Day1()
-    # Day2()
+     Day2()
     # Day3()
     # Day4()
     # Day5()
@@ -195,4 +195,3 @@ if __name__ == "__main__":
     # Day23()
     # Day24()
     # Day25()
-    print("remember to uncomment a function")
