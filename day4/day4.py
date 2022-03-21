@@ -2,6 +2,9 @@ draws = None
 board = []
 boards = []
 
+row = []
+n = 0
+
 for line in open (".\input4.txt", "r"):
     line = line.strip()
 
@@ -23,16 +26,8 @@ boards.append(board)
 for draw in draws:
     #check if the number is on a board and mark it true
     for board in boards:
-        if draw in board:
-            board[draw] = True
-    
-    #check for winning boards
-    for board in boards:
-
-    
         for i in range(5):
             for j in range(5):
-                break
-                
-print(draws)
-print(boards)
+                if draw in board[i]:
+                    board[i] = True
+                    print(board[i])
