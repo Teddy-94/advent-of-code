@@ -1,33 +1,46 @@
-draws = None
-board = []
-boards = []
+with open (".\input4.txt", "r") as f:
+    first, *rest = f.read().split("\n\n")
+    #parse draws
+    draws = [int(x) for x in first.strip().split(",")]
+    #parse boards
+    boards = [[[int(col) for col in row.split()] for row in board.split("\n")] for board in rest]
 
-row = []
-n = 0
+def markBoard(draw, board):
+    for row in board:
+        for i in range(0, len(row)):
+            if row[i] == draw:    
+                row[i] = "x"
 
-for line in open (".\input4.txt", "r"):
-    line = line.strip()
+def sumBoard(board):
+    sum = 0 
+    for row in board:
+        for n in row:
+            if n != "x":
+                sum += n
+    return sum
 
-    #filter out the first line
-    if draws is None:
-        draws = [int(x) for x in line.split(",")]
+def checkWinner(board):
+    win =False
+    #rows
+    for row in board:
+        win = all(e in ["x"] for e in row)
+        if win:
+            return win
+    #columns
+    for i in range(0, 5):
+        win = all(e in ["x"] for e in [row[i] for row in board])
+        if win:
+            return win
 
-    #parse the boards
-    else: 
-        if line:
-            board.append([int(x) for x in line.split()])
-        else:
-            if board:
-                boards.append(board)
-                board = []
-boards.append(board)
+    return win
 
-#for every number drawn
-for draw in draws:
-    #check if the number is on a board and mark it true
-    for board in boards:
-        for i in range(5):
-            for j in range(5):
-                if draw in board[i]:
-                    board[i] = True
-                    print(board[i])
+def run():
+    for draw in draws:
+        for board in boards:
+            markBoard(draw, board)
+
+            if checkWinner(board):
+                return (sumBoard(board)*draw)
+
+
+print(run())
