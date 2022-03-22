@@ -1,4 +1,4 @@
-with open (".\inputs\input6.txt", "r") as f: 
+with open (".\input6.txt", "r") as f: 
     fish = list(map(int, f.read().split(",")))
     fishes =[0] * 9
 
