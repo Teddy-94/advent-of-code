@@ -35,7 +35,4 @@ count2 = 0
 for n in points2:
     if points2[n] > 1:
         count2 +=1
-print(count + count2)
-
-print(len([k for k in points if points[k]>1]))
-print(len([k for k in points2 if points2[k]>1]))
+print(count2)
