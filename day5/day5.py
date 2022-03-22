@@ -1,7 +1,5 @@
 from collections import defaultdict
 
-from numpy import deg2rad
-
 points = defaultdict(int) 
 points2 = defaultdict(int) 
 
