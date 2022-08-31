@@ -6,17 +6,30 @@ fn main() {
         .map(|n| n.parse::<i32>().expect("some error"))
         .collect();
 
-    part_a(&nums);
+    println!("{}", part_a(&nums));
+    println!("{}", part_b(&nums));
 }
 
-fn part_a(nums: &Vec<i32>) {
-    
-    let mut count:i32 = 0;
+fn part_a(nums: &Vec<i32>) -> i32 {
+    let mut count: i32 = 0;
 
-    for i in 1..nums.len() {
-        if nums[i] > nums[i - 1] {
+    for i in 0..nums.len() - 1 {
+        if nums[i] < nums[i + 1] {
             count += 1;
         }
     }
-    print!("{}", count.to_string());
+    count
+}
+
+fn part_b(nums: &Vec<i32>) -> i32 {
+    let mut count: i32 = 0;
+
+    for i in 0..nums.len() - 3 {
+        let a = nums[i] + nums[i + 1] + nums[i + 2];
+        let b = nums[i + 1] + nums[i + 2] + nums[i + 3];
+        if a < b {
+            count += 1;
+        }
+    }
+    count
 }
