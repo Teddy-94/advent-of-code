@@ -1,5 +1,5 @@
 position = depth = 0
-for line in open (".\input2.txt"):
+for line in open ("..\..\input\day2.txt.txt"):
     command, n = line.split(" ")
     n = int(n)
     
@@ -14,7 +14,7 @@ print (position*depth)
 
 position = depth = aim = 0
 
-for line in open (".\input2.txt"):
+for line in open ("..\..\input\day2.txt.txt"):
 
     command, n = line.split(" ")
     n = int(n)

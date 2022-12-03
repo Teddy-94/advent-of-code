@@ -1,6 +1,6 @@
 # part 1
 lines = []
-for d in open(".\input3.txt"):
+for d in open("..\..\input\day3.txt.txt"):
     lines.append(d.splitlines())
 
 count = [0] * len(lines[0])

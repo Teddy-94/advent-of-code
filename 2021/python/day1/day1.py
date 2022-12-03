@@ -1,4 +1,4 @@
-with open (".\input1.txt", "r") as f:
+with open ("..\..\input\day1.txt", "r") as f:
         d = f.read().strip().splitlines()
 depth_increases = 0
 for i in range(1, len(d)):

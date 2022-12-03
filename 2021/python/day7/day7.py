@@ -1,5 +1,5 @@
 import statistics
-with open (".\input7.txt", "r") as f:
+with open ("..\..\input\day7.txt", "r") as f:
     d = f.read().split(",")
     for i, line in enumerate(d):
         d[i] = int(d[i])

@@ -1,4 +1,4 @@
-with open (".\input8.txt") as f:
+with open ("..\..\input\day8.txt") as f:
     d = f.read()
     count = 0
     

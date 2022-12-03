@@ -3,7 +3,7 @@ from collections import defaultdict
 points = defaultdict(int) 
 points2 = defaultdict(int) 
 
-with open (".\input5.txt", "r") as f:
+with open ("..\..\input\day5.txt", "r") as f:
         d = f.read().strip().splitlines()
 
         #parse data
