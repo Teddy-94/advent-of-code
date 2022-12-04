@@ -1,80 +1,89 @@
 with open("..\..\input\day8.txt") as f:
-    d = f.read()
+    data = [line for line in f.read().strip().splitlines()]
+
+    inputs = [line.split(" | ")[0].split(" ") for line in data]
+    inputs = [[''.join(sorted(s)) for s in input] for input in inputs]
+
+    outputs = [line.split(" | ")[1].split(" ") for line in data]
+    outputs = [[''.join(sorted(s)) for s in output] for output in outputs]
 
 
-def part1():
+def part1(outputs):
     count = 0
-    for line in d.splitlines():
-        _, output = line.split("|")
-        output = output.split()
-        # part1
-        for s in output:
-            if len(s) in {2, 3, 4, 7}:
+    for output in outputs:
+        for digit in output:
+            if len(digit) in {2, 3, 4, 7}:
                 count += 1
 
     return(count)
 
 
-def part2():
-    keyForUnknownNumbers = [
-        "abcefg",   # 0
-        "acdeg",    # 2
-        "acdfg",    # 3
-        "abdfg",    # 5
-        "abdefg",   # 6
-        "abcdfg",   # 9
-    ]
+def part2(inputs, outputs):
+    solved = {}
+    total = 0
 
-    solved = {
+    for index, input in enumerate(inputs):
 
-    }
+        # solve digits with unique numbers of active segments
+        for digit in input:
+            if len(digit) == 2:
+                solved[1] = digit
+            elif len(digit) == 4:
+                solved[4] = digit
+            elif len(digit) == 3:
+                solved[7] = digit
+            elif len(digit) == 7:
+                solved[8] = digit
 
-    for line in d.splitlines():
-        # for each line we want to first find the known digits, those with unique numbers of sections in use (s.len)
-        # Then we use the known digits to find the rest of the digits.
-        # Diffing the s with the known digits lets us find the remaining digits
-        #
-        input, output = line.split("|")
-        output = [''.join(sorted(s)) for s in output.split()]
-        input = [''.join(sorted(s)) for s in input.split()]
-        digits = {*input, *output}
-        
-        
-    def findKnown(s):
-        if len(s) == 2:
-            solved[1] = s
-        elif len(s) == 3:
-            solved[7] = s
-        elif len(s) == 4:
-            solved[4] = s
-        elif len(s) == 7:
-            solved[8] = s
+        # Find 0, 6, 9, all which have 6 segments active
+        for digit in input:
+            if len(digit) == 6:
+                # 1 is completely covered by 0 and 9, but not 6
+                if diff(solved[1], digit) == 1:
+                    solved[6] = digit
+                # 4 is completely covered by 9 but not 0
+                elif diff(solved[4], digit) == 0:
+                    solved[9] = digit
+                # 0 is the only 6-len digit left
+                else:
+                    solved[0] = digit
 
-    def findLengh6(s):
-        # if s len == 6 then the digit is either 0, 6, or 9
-
-        # 8 completely contains 0 <- finds 0
-
-        # 9 completely contains 4 / 1 /  finds 9
- 
-        # else = 6 
-        # 6 does not completely cover 1, 4, or 7 finds 6
-        return
-
-    def findLengh5(s):
-        # if s len == 6 then the digit is either 2, 3, or 5
-
-        # 3 completely contains 1 / 7 finds 3
-        # 
-        # 5 is one line different from 4
-        # whereas 2 is two lines different from 4
-        # if line diff 5 & 4 == 1, digit = 5 finds 5 
-
-        # else 2 finds 2
-
-        return
-
-    return input, output, digits
+        # Find 2, 3, 5, all which have 5 segments active
+        for digit in input:
+            if len(digit) == 5:
+                # 3 completely covers 1
+                if diff(solved[1], digit) == 0:
+                    solved[3] = digit
+                # 5 misses one section of 4, whereas 2 misses 2 sections
+                elif diff(solved[4], digit) == 1:
+                    solved[5] = digit
+                # 0 is the only 6-len digit left
+                else:
+                    solved[2] = digit
 
 
-print(part1(), part2())
+        currentNumber = []
+        for digit in outputs[index]:
+            for key, value in solved.items():
+                #print(digit, value)
+                if digit == value:
+                    currentNumber.append(str(key))
+        currentNumber = int("".join(currentNumber))
+        total = total+currentNumber
+
+    return total
+
+
+def diff(knownDigit, candidateDigit):
+    diffCount = 0
+    # Checks how many of the segments in the known digit are NOT in the candidate digit
+    for char in knownDigit:
+        if char not in candidateDigit:
+            diffCount += 1
+    return diffCount
+
+
+print(
+    part1(outputs),
+    part2(inputs, outputs)
+)
