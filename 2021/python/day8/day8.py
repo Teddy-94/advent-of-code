@@ -61,7 +61,6 @@ def part2(inputs, outputs):
                 else:
                     solved[2] = digit
 
-
         currentNumber = []
         for digit in outputs[index]:
             for key, value in solved.items():
