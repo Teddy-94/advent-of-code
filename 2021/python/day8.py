@@ -1,5 +1,5 @@
-with open("..\..\input\day8.txt") as f:
-    data = [line for line in f.read().strip().splitlines()]
+with open("..\input\day8.txt") as f:
+    data = f.read().strip().splitlines()
 
     inputs = [line.split(" | ")[0].split(" ") for line in data]
     inputs = [[''.join(sorted(s)) for s in input] for input in inputs]
@@ -8,7 +8,7 @@ with open("..\..\input\day8.txt") as f:
     outputs = [[''.join(sorted(s)) for s in output] for output in outputs]
 
 
-def part1(outputs):
+def part1():
     count = 0
     for output in outputs:
         for digit in output:
@@ -18,7 +18,7 @@ def part1(outputs):
     return(count)
 
 
-def part2(inputs, outputs):
+def part2():
     solved = {}
     total = 0
 
@@ -82,7 +82,4 @@ def diff(knownDigit, candidateDigit):
     return diffCount
 
 
-print(
-    part1(outputs),
-    part2(inputs, outputs)
-)
+print(part1(), part2())

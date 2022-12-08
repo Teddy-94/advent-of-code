@@ -1,9 +1,9 @@
-with open("..\..\input\day9.txt") as f:
-    d = f.readlines()
+with open("..\input\day9.txt") as f:
+    d = f.read().strip().splitlines()
 
     grid = []
     for line in d:
-        grid.append([int(number) for number in line.strip()])
+        grid.append([int(number) for number in line])
 
     row_len = len(grid)
     column_len = len(grid[0])
@@ -59,7 +59,7 @@ def part2():
                     # check if we have visited this point in the grid
                     if (row, column) in visited:
                         continue
-                    
+
                     # mark that we have visited a point
                     visited.add((row, column))
                     basin_size += 1
@@ -76,7 +76,7 @@ def part2():
                 basins.append(basin_size)
 
     basins.sort()
-    return basins, (basins[-1] * basins[-2] * basins[-3])
+    return (basins[-1] * basins[-2] * basins[-3])
 
 
-print(part2())
+print(part1(), part2())

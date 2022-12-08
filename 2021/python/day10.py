@@ -1,4 +1,4 @@
-with open("..\..\input\day10.txt") as f:
+with open("..\input\day10.txt") as f:
     d = f.readlines()
 
 
@@ -32,14 +32,11 @@ def part1():
                     if openingTag == stack[-1]:
                         stack.pop()
                     else:
-                        print(stack)
-                        print(
-                            f"this looks like an unopened closing item --> {char} adding {score[char]}")
                         total = total + score[char]
-                        print(f"total score is now {total}")
                         ok = False
                         break
     return(total)
+
 
 def part2():
     score = {
@@ -74,19 +71,18 @@ def part2():
                     else:
                         # this is a corrupted line
                         ok = False
-                        
-            if ok and idx==len(line)-1:
+
+            if ok and idx == len(line)-1:
                 # this is an unfinished line, needs to be completed and scored
-                print(stack)
-                print(lineScore)
+
                 for i in range(len(stack)):
                     for openingTag in closingTag:
                         if openingTag == stack[len(stack)-1-i]:
-                            lineScore = lineScore*5+score[closingTag[openingTag]]
-                print(lineScore)
+                            lineScore = lineScore*5 + \
+                                score[closingTag[openingTag]]
+
                 totalScore.append(lineScore)
     return(sorted(totalScore)[len(totalScore)//2])
 
-print(#part1(),
-    part2()
-)
+
+print(part1(), part2(),)

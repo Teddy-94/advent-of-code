@@ -1,4 +1,4 @@
-with open("..\..\input\day4.txt", "r") as f:
+with open("..\input\day4.txt", "r") as f:
     first, *rest = f.read().split("\n\n")
     # parse draws
     draws = [int(x) for x in first.strip().split(",")]
@@ -60,5 +60,6 @@ def part2():
                     winners.append(board)
                     winningDraw = draw
     return (sumBoard(winners[-1])*winningDraw)
+
 
 print(f"first winner score: {part1()}, last winner score: {part2()}")
