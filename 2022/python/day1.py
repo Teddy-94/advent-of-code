@@ -1,2 +1,2 @@
-with open("..\..\input\day10.txt") as f:
+with open("..\..\input\day1.txt") as f:
     d = f.readlines()
