@@ -1,5 +1,6 @@
 fn main() {
-    let input: String = std::fs::read_to_string("../../input/day1.txt").expect("can't read file");
+    let input_path = format!("../../input/{}.txt", env!("CARGO_PKG_NAME"));
+    let input: String = std::fs::read_to_string(input_path).expect("can't read file");
     let elfs: Vec<Vec<i32>> = input
         .split("\r\n\r\n")
         .map(|elf| -> Vec<i32> {
@@ -39,8 +40,8 @@ mod tests {
     use super::*;
     #[test]
     fn test_part_1() {
-        let input: String =
-            std::fs::read_to_string("../../input/day1_test.txt").expect("can't read file");
+        let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
+        let input: String = std::fs::read_to_string(input_path).expect("can't read file");
         let elfs: Vec<Vec<i32>> = input
             .split("\r\n\r\n")
             .map(|elf| -> Vec<i32> {

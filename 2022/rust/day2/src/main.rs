@@ -1,7 +1,8 @@
-use std::collections::HashMap;
+use std::{collections::HashMap};
 
 fn main() {
-    let input: String = std::fs::read_to_string("../../input/day2.txt").expect("can't read file");
+    let input_path = format!("../../input/{}.txt", env!("CARGO_PKG_NAME"));
+    let input: String = std::fs::read_to_string(input_path).expect("can't read file");
     let games: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
 
     let scoring_table: HashMap<&str, i32> = HashMap::from([
@@ -86,8 +87,8 @@ mod tests {
     use super::*;
     #[test]
     fn test_part_1() {
-        let input: String =
-            std::fs::read_to_string("../../input/day2_test.txt").expect("can't read file");
+        let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
+        let input: String = std::fs::read_to_string(input_path).expect("can't read file");
         let games: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
 
         let scoring_table: HashMap<&str, i32> = HashMap::from([
