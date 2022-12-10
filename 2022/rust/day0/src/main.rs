@@ -1,4 +1,3 @@
-// template
 fn main() {
     let input_path = format!("../../input/{}.txt", env!("CARGO_PKG_NAME"));
     let input: String = std::fs::read_to_string(input_path).expect("can't read file");
