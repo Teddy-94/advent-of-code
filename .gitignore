@@ -1,4 +1,5 @@
-*.txt
-target/
 input/
+target/
+debug/
 .vscode/
+Cargo.lock
