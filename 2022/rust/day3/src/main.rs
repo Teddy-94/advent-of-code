@@ -4,9 +4,9 @@ fn main() {
     let backpacks: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
 
     println!(
-        "part 1 {:?},
-        \npart 2 {}",
+        "part 1 {}{}part 2 {}",
         part_1(&backpacks),
+        "\n",
         part_2(&backpacks)
     )
 }
