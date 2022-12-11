@@ -1,65 +1,73 @@
+use std::collections::VecDeque;
+
 fn main() {
     let input_path = format!("../../input/{}.txt", env!("CARGO_PKG_NAME"));
     let input: String = std::fs::read_to_string(input_path).expect("can't read file");
-    let row: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
 
-    //println!("{:?}", input.len());
-    println!("part 1 {}{}part 2 {}", part_1(&input), "\n", part_2(&row))
+    let signal_vec: Vec<char> = input.chars().collect::<Vec<char>>();
+
+    println!("part 1 {}\npart 2 {}", part_1(&signal_vec), part_2(&signal_vec))
 }
 
-fn part_1(input: &String) -> i32 {
-    let mut start_marker: Vec<String> = vec![];
-    let input = input.clone();
-    // for i in 0..3{
+fn part_1(signal_vec: &Vec<char>) -> usize {
+    return message_checker(4, signal_vec);
+}
 
-    // }
-    let mut i = 0;
-    while i < input.len() {
-        println!("{:?}", i);
-        println!("{:?}", input.len());
-        let char_to_add = input.chars().nth(i).unwrap().to_string();
-        start_marker.push(char_to_add);
-        println!("startmarker len {:?}", start_marker.len());
-        println!("start marker {:?}", start_marker);
-        if i >= 4 {
-            let window = vec![
-                &start_marker[start_marker.len()],
-                &start_marker[start_marker.len() - 1],
-                &start_marker[start_marker.len() - 2],
-            ];
-            println!("window {:?}", window);
-            for c in &window {
-                println!("{}", c);
-                if window.contains(c) {
-                    println!("{:?}", "YAYAYA");
+fn part_2(signal_vec: &Vec<char>) -> usize {
+    return message_checker(14, signal_vec);
+}
+
+fn message_checker(message_len: usize, list_to_check: &Vec<char>) -> usize {
+    let mut x = 0;
+    while x < list_to_check.len() {
+        // make a 4 char window
+        let mut queue: VecDeque<char> = VecDeque::with_capacity(message_len);
+        for i in 0..message_len {
+            queue.push_back(list_to_check[x + i])
+        }
+        // check for dupes in window
+        let mut count = 0;
+        let mut unique_count = 0;
+        for c in &queue {
+            for each in &queue {
+                if c == each {
+                    count += 1;
                 }
             }
-            start_marker.remove(0);
+            // char is not unique
+            if count > 1 {
+            } else {
+                unique_count += 1;
+            }
+            count = 0;
         }
-        i += 1
+        if unique_count == message_len {
+            println!("i think we got a signal on char {:?}", x + message_len);
+            return x + message_len;
+        }
+        x += 1;
     }
+    println!("there doesn't seem to be any messages here");
     return 0;
 }
 
-fn part_2(_row: &Vec<&str>) -> i32 {
-    return 0;
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_part_1() {
+        let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
+        let input: String = std::fs::read_to_string(input_path).expect("can't read file");
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//     #[test]
-//     fn test_part_1() {
-//         let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
-//         let input: String = std::fs::read_to_string(input_path).expect("can't read file");
-//         let row: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
-//         assert_eq!(part_1(&row), 5);
-//     }
-//     #[test]
-//     fn test_part_2() {
-//         let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
-//         let input: String = std::fs::read_to_string(input_path).expect("can't read file");
-//         let row: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
-//         assert_eq!(part_2(&row), 0);
-//     }
-// }
+        let chars: Vec<char> = input.chars().collect::<Vec<char>>();
+        assert_eq!(part_1(&chars), 5);
+    }
+    #[test]
+    fn test_part_2() {
+        let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
+        let input: String = std::fs::read_to_string(input_path).expect("can't read file");
+
+        let chars: Vec<char> = input.chars().collect::<Vec<char>>();
+        assert_eq!(part_2(&chars), 23);
+    }
+}
