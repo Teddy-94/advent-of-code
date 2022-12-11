@@ -3,12 +3,7 @@ fn main() {
     let input: String = std::fs::read_to_string(input_path).expect("can't read file");
     let row: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
 
-    println!(
-        "part 1 {}{}part 2 {}",
-        part_1(&row),
-        "\n",
-        part_2(&row)
-    )
+    println!("part 1 {}part 2 {}", part_1(&row), part_2(&row))
 }
 
 fn part_1(row: &Vec<&str>) -> i32 {
