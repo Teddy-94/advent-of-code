@@ -51,9 +51,8 @@ fn main() {
     }
 
     println!(
-        "part 1 {}{}part 2 {}",
+        "part 1 {}\npart 2 {}",
         part_1(crate_stacks.clone(), instructions_vec.clone()),
-        "\n",
         part_2(crate_stacks, instructions_vec)
     )
 }
@@ -96,7 +95,7 @@ fn part_1(mut crate_stacks: Vec<Vec<char>>, instructions_vec: Vec<&str>) -> Stri
     return final_string;
 }
 
-fn part_2(mut crate_stacks: Vec<Vec<char>>, instructions_vec: Vec<&str>) -> String{
+fn part_2(mut crate_stacks: Vec<Vec<char>>, instructions_vec: Vec<&str>) -> String {
     for i in 0..crate_stacks.len() {
         crate_stacks[i].reverse()
     }
@@ -123,7 +122,7 @@ fn part_2(mut crate_stacks: Vec<Vec<char>>, instructions_vec: Vec<&str>) -> Stri
             );
         }
         moving_stack.reverse();
-        for item in moving_stack{
+        for item in moving_stack {
             crate_stacks[to].push(item);
         }
     }

@@ -3,12 +3,7 @@ fn main() {
     let input: String = std::fs::read_to_string(input_path).expect("can't read file");
     let backpacks: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
 
-    println!(
-        "part 1 {}{}part 2 {}",
-        part_1(&backpacks),
-        "\n",
-        part_2(&backpacks)
-    )
+    println!("part 1 {}part 2 {}", part_1(&backpacks), part_2(&backpacks))
 }
 
 fn part_1(backpacks: &Vec<&str>) -> i32 {

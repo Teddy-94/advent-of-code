@@ -1,4 +1,4 @@
-use std::{collections::HashMap};
+use std::collections::HashMap;
 
 fn main() {
     let input_path = format!("../../input/{}.txt", env!("CARGO_PKG_NAME"));

@@ -11,8 +11,11 @@ fn main() {
         .collect::<Vec<Vec<i32>>>();
 
     let mut elfsums: Vec<i32> = vec![];
-    println!("{}", part_1(&elfs, &mut elfsums));
-    println!("{}", part_2(&mut elfsums));
+    println!(
+        "part 1 {}\npart 2 {}",
+        part_1(&elfs, &mut elfsums),
+        part_2(&mut elfsums)
+    );
 }
 
 fn part_1(elfs: &Vec<Vec<i32>>, elfsums: &mut Vec<i32>) -> i32 {
@@ -54,23 +57,22 @@ mod tests {
         let mut elfsums: Vec<i32> = vec![];
         println!("{}", part_1(&elfs, &mut elfsums));
         assert_eq!(part_1(&elfs, &mut elfsums), 24000);
-        
     }
     #[test]
     fn test_part_2() {
         let input: String =
-        std::fs::read_to_string("../../input/day1_test.txt").expect("can't read file");
+            std::fs::read_to_string("../../input/day1_test.txt").expect("can't read file");
         let elfs: Vec<Vec<i32>> = input
-        .split("\r\n\r\n")
-        .map(|elf| -> Vec<i32> {
-            elf.split("\r\n")
-            .filter_map(|calorie| calorie.parse::<i32>().ok())
-            .collect::<Vec<i32>>()
-        })
+            .split("\r\n\r\n")
+            .map(|elf| -> Vec<i32> {
+                elf.split("\r\n")
+                    .filter_map(|calorie| calorie.parse::<i32>().ok())
+                    .collect::<Vec<i32>>()
+            })
             .collect::<Vec<Vec<i32>>>();
-            
-            let mut elfsums: Vec<i32> = vec![];
-            
+
+        let mut elfsums: Vec<i32> = vec![];
+
         part_1(&elfs, &mut elfsums);
         println!("{}", part_2(&mut elfsums));
         assert_eq!(part_2(&mut elfsums), 45000);

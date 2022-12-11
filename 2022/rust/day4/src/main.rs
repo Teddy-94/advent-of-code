@@ -4,9 +4,8 @@ fn main() {
     let elf_pairs: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
 
     println!(
-        "part 1 {}{}part 2 {}",
+        "part 1 {}\npart 2 {}",
         part_1(&elf_pairs),
-        "\n",
         part_2(&elf_pairs)
     )
 }
