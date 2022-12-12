@@ -19,9 +19,9 @@ fn main() {
 }
 
 fn part_1(elfs: &Vec<Vec<i32>>, elfsums: &mut Vec<i32>) -> i32 {
-    for elf in elfs.into_iter() {
+    for elf in elfs.iter() {
         let mut sum: i32 = 0;
-        for calorie in elf.into_iter() {
+        for calorie in elf.iter() {
             sum += calorie;
         }
 
