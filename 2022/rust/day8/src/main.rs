@@ -13,7 +13,7 @@ fn main() {
         trees.push(temp_row)
     }
 
-    println!("part 1 {}\npart 2 {}", part_1(&trees), part_2())
+    println!("part 1 {}\npart 2 {}", part_1(&trees), part_2(&trees))
 }
 
 fn part_1(trees: &Vec<Vec<i32>>) -> usize {
@@ -60,8 +60,46 @@ fn part_1(trees: &Vec<Vec<i32>>) -> usize {
     return trees_visible.len();
 }
 
-fn part_2() -> i32 {
-    return 0;
+fn part_2(trees: &Vec<Vec<i32>>) -> i32 {
+    let row_len = trees[0].len();
+    let col_len = trees.len();
+
+    let directions: [(i32, i32); 4] = [(1, 0), (-1, 0), (0, 1), (0, -1)];
+    let mut scenic_score: Vec<i32> = vec![];
+    for i in 0..row_len {
+        for j in 0..col_len {
+            let mut tree_count: Vec<i32> = vec![];
+
+            for d in directions {
+                let mut count = 0;
+                let mut di: i32 = i.try_into().unwrap();
+                let mut dj: i32 = j.try_into().unwrap();
+                loop {
+                    count += 1;
+                    di += d.0;
+                    dj += d.1;
+
+                    if !(0 <= di
+                        && di < row_len.try_into().unwrap()
+                        && 0 <= dj
+                        && dj < col_len.try_into().unwrap())
+                    {
+                        // if out of bounds, break and remove 1 count
+                        count -= 1;
+                        break;
+                    } else if trees[di as usize][dj as usize] >= trees[i][j] {
+                        // if a tree is taller than i j
+                        break;
+                    }
+                }
+                tree_count.push(count);
+            }
+            let total = tree_count[0] * tree_count[1] * tree_count[2] * tree_count[3];
+            scenic_score.push(total);
+        }
+    }
+    scenic_score.sort();
+    return scenic_score[scenic_score.len() - 1];
 }
 
 #[cfg(test)]
@@ -88,6 +126,15 @@ mod tests {
         let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
         let input: String = std::fs::read_to_string(input_path).expect("can't read file");
         let row: Vec<&str> = input.split("\r\n").collect::<Vec<&str>>();
-        assert_eq!(part_2(), 0);
+        let mut trees: Vec<Vec<i32>> = vec![];
+        for r in row {
+            let mut temp_row: Vec<i32> = vec![];
+            for c in r.chars() {
+                temp_row.push(c as i32 - 8);
+            }
+            trees.push(temp_row)
+        }
+
+        assert_eq!(part_2(&trees), 99);
     }
 }
