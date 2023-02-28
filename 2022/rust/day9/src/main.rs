@@ -8,101 +8,64 @@ fn main() {
     println!("part 1 {}\npart 2 {}", part_1(&row), part_2(&row))
 }
 
-#[allow(unused_variables)]
 fn part_1(row: &Vec<&str>) -> usize {
     let mut tail_pos: (i32, i32) = (0, 0);
     let mut head_pos: (i32, i32) = (0, 0);
-    let mut prev_head_pos: (i32, i32) = (0, 0);
     let mut tail_visited: HashSet<(i32, i32)> = HashSet::new();
 
-    fn check_tail_dist(head_pos: &(i32, i32), tail_pos: &(i32, i32)) -> bool {
-        let y_diff = (head_pos.0 - tail_pos.0).abs();
-        let x_diff = (head_pos.1 - tail_pos.1).abs();
-        println!(
-            "head position is {:?} and tail position is {:?}, Y diff is {:?}, X diff is {:?}",
-            head_pos, tail_pos, y_diff, x_diff
-        );
+    fn decide_move(pos_1: &(i32, i32), pos_2: &(i32, i32)) -> (i32, i32, bool) {
+        let dy = pos_1.0 - pos_2.0;
+        let dx = pos_1.1 - pos_2.1;
+        let mut to_move = (0, 0, false);
 
-        if y_diff > 1 {
-            return true;
-        } else if x_diff > 1 {
-            return true;
-        } else {
-            return false;
+        if dy.abs() > 1 || dx.abs() > 1 {
+            to_move.2 = true
         }
+
+        if dy < 0 {
+            to_move.0 = -1
+        } else if dy > 0 {
+            to_move.0 = 1
+        }
+        if dx < 0 {
+            to_move.1 = -1
+        } else if dx > 0 {
+            to_move.1 = 1
+        }
+        return to_move;
     }
 
     tail_visited.insert(tail_pos);
 
-    for r in row {
-        let (direction, dist) = r.split_once(' ').unwrap();
+    for instruction in row {
+        let (direction, dist) = instruction.split_once(' ').unwrap();
         let dist = dist.parse::<i32>().unwrap();
 
-        println!("direction {:?} and distance {:?}", direction, dist);
-        println!("{:?}", r);
-
-        match direction {
-            "U" => {
-                println!("direction is U");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.0 += 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        tail_visited.insert(tail_pos);
-                    };
-                }
+        for _ in 0..dist {
+            match direction {
+                "U" => head_pos.0 += 1,
+                "D" => head_pos.0 -= 1,
+                "L" => head_pos.1 -= 1,
+                "R" => head_pos.1 += 1,
+                _ => println!("dang!"),
             }
-            "D" => {
-                println!("direction is D");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.0 -= 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        tail_visited.insert(tail_pos);
-                    };
-                }
-            }
-            "L" => {
-                println!("direction is L");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.1 -= 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        tail_visited.insert(tail_pos);
-                    };
-                }
-            }
-            "R" => {
-                println!("direction is R");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.1 += 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        tail_visited.insert(tail_pos);
-                    };
-                }
-            }
-            _ => println!("dang!"),
+            let (move_y, move_x, move_bool) = decide_move(&head_pos, &tail_pos);
+            if move_bool {
+                tail_pos.0 += move_y;
+                tail_pos.1 += move_x;
+            } else {
+                // no need to move
+            };
+            tail_visited.insert(tail_pos);
         }
     }
+
     return tail_visited.len();
 }
 
-#[allow(unused_variables)]
 fn part_2(row: &Vec<&str>) -> usize {
-    let mut rope: [(i32, i32); 9] = [
+    let mut rope: [(i32, i32); 10] = [
+        (0, 0),
         (0, 0),
         (0, 0),
         (0, 0),
@@ -113,106 +76,62 @@ fn part_2(row: &Vec<&str>) -> usize {
         (0, 0),
         (0, 0),
     ];
-    let mut pos_visited: HashSet<(i32, i32)> = HashSet::new();
+    let mut tail_visited: HashSet<(i32, i32)> = HashSet::new();
 
-    pos_visited.insert((0, 0));
+    fn decide_move(pos_1: &(i32, i32), pos_2: &(i32, i32)) -> (i32, i32, bool) {
+        let dy = pos_1.0 - pos_2.0;
+        let dx = pos_1.1 - pos_2.1;
+        let mut to_move = (0, 0, false);
 
-    fn check_tail_dist(head_pos: &(i32, i32), tail_pos: &(i32, i32)) -> bool {
-        let y_diff = (head_pos.0 - tail_pos.0).abs();
-        let x_diff = (head_pos.1 - tail_pos.1).abs();
-        println!(
-            "head position is {:?} and tail position is {:?}, Y diff is {:?}, X diff is {:?}",
-            head_pos, tail_pos, y_diff, x_diff
-        );
-
-        if y_diff > 1 {
-            return true;
-        } else if x_diff > 1 {
-            return true;
-        } else {
-            return false;
+        if dy.abs() > 1 || dx.abs() > 1 {
+            to_move.2 = true
         }
+
+        if dy < 0 {
+            to_move.0 = -1
+        } else if dy > 0 {
+            to_move.0 = 1
+        }
+        if dx < 0 {
+            to_move.1 = -1
+        } else if dx > 0 {
+            to_move.1 = 1
+        }
+        return to_move;
     }
 
-    for r in row {
-        let (direction, dist) = r.split_once(' ').unwrap();
+    tail_visited.insert(rope[rope.len() - 1]);
+
+    for instruction in row {
+        let (direction, dist) = instruction.split_once(' ').unwrap();
         let dist = dist.parse::<i32>().unwrap();
-        for i in 0..rope.len() {
-            move_section(direction, dist, rope[i], rope[i - 1], &mut pos_visited);
-        }
-    }
-    fn move_section(
-        direction: &str,
-        dist: i32,
-        head_pos: (i32, i32),
-        tail_pos: (i32, i32),
-        pos_visited: &mut HashSet<(i32, i32)>,
-    ) {
-        println!(
-            "direction {:?} distance {:?} head {:?}, tail {:?}",
-            direction, dist, head_pos, tail_pos
-        );
 
-        let mut prev_head_pos;
-
-        match direction {
-            "U" => {
-                println!("direction is U");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.0 += 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        pos_visited.insert(tail_pos);
-                    };
-                }
+        for _ in 0..dist {
+            // only head moves according to the instructions. rest of rope moves according to decide_move
+            match direction {
+                "U" => rope[0].0 += 1,
+                "D" => rope[0].0 -= 1,
+                "L" => rope[0].1 -= 1,
+                "R" => rope[0].1 += 1,
+                _ => println!("dang!"),
             }
-            "D" => {
-                println!("direction is D");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.0 -= 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        pos_visited.insert(tail_pos);
-                    };
-                }
+            for i in 1..rope.len() {
+                let (move_y, move_x, move_bool) = decide_move(&rope[i - 1], &rope[i]);
+                if move_bool {
+                    rope[i].0 += move_y;
+                    rope[i].1 += move_x;
+                    if i == rope.len() - 1 {
+                        // if we moved the tail, add it to the pos_visited
+                        tail_visited.insert(rope[i]);
+                    }
+                } else {
+                    // no need to move
+                };
             }
-            "L" => {
-                println!("direction is L");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.1 -= 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        pos_visited.insert(tail_pos);
-                    };
-                }
-            }
-            "R" => {
-                println!("direction is R");
-                for n in 0..dist {
-                    prev_head_pos = head_pos;
-                    head_pos.1 += 1;
-                    if !check_tail_dist(&head_pos, &tail_pos) {
-                    } else {
-                        println!("tail moved to {:?}", prev_head_pos);
-                        tail_pos = prev_head_pos;
-                        pos_visited.insert(tail_pos);
-                    };
-                }
-            }
-            _ => println!("dang!"),
         }
     }
 
-    return pos_visited.len();
+    return tail_visited.len();
 }
 
 #[cfg(test)]
