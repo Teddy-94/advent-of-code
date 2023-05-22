@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 
-const input = readFileSync('../input/day1.txt', 'utf-8');
-const input_arr = input.split('\r\n').map(x => { return parseInt(x, 10) })
+const input: string = readFileSync('../input/day1.txt', 'utf-8');
+const input_arr: number[] = input.split('\r\n').map(x => { return parseInt(x, 10) })
 
 const elfs: number[][] = [];
 let currentElf: number[] = [];
