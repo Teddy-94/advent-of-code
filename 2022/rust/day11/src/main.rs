@@ -13,23 +13,37 @@ struct Monkey {
 fn main() {
     let input_path = format!("../../input/{}.txt", env!("CARGO_PKG_NAME"));
     let input: String = std::fs::read_to_string(input_path).expect("can't read file");
-    let monkey_vec = get_monkey_vec(input);
-
+    //   let monkey_vec = get_monkey_vec(input);
+    // incredibly ugly bc this modivies the monkey vec in place instead of making new results...
     println!(
         "part 1 {}\npart 2 {}",
-        part_1(&monkey_vec),
-        part_2(&monkey_vec)
+        part_1(input.clone()),
+        part_2(input.clone())
     )
 }
 
-fn part_1(monkey_vec: &Vec<Monkey>) -> i64 {
+fn part_1(input: String) -> i64 {
+    let monkey_vec = get_monkey_vec(input);
     monkey_biz(20, &monkey_vec, false);
     return get_monkey_biz_level(&monkey_vec);
 }
 
-fn part_2(monkey_vec: &Vec<Monkey>) -> i64 {
-    monkey_biz(1000, &monkey_vec, true);
+fn part_2(input: String) -> i64 {
+    let monkey_vec = get_monkey_vec(input);
+    monkey_biz(10000, &monkey_vec, true);
     return get_monkey_biz_level(&monkey_vec);
+}
+
+fn calc_lcd(monkeys: &Vec<Monkey>) -> i64 {
+    // calcualtes and returns the lowest common denominator
+    let mut local_lcd: i64 = 1;
+    for monkey in monkeys {
+        println!("monkey number is : {0}", monkey.divisible_test);
+        if local_lcd % monkey.divisible_test != 0 {
+            local_lcd *= monkey.divisible_test;
+        }
+    }
+    return local_lcd;
 }
 
 fn get_monkey_vec(input: String) -> Vec<Monkey> {
@@ -37,10 +51,7 @@ fn get_monkey_vec(input: String) -> Vec<Monkey> {
     let mut monkeys: Vec<Monkey> = vec![];
 
     for input in monkey_input {
-        println!("printing input {input}");
         let rows: Vec<&str> = input.lines().collect();
-
-        println!("{rows:?}");
 
         let mut items: Vec<i64> = vec![];
         let mut monkey_parsing: Vec<&str> = rows[1].trim().split("Starting items: ").collect();
@@ -71,11 +82,11 @@ fn get_monkey_vec(input: String) -> Vec<Monkey> {
 
         let monkey = Monkey {
             items: RefCell::new(items),
-            operation: operation,
-            operation_value: operation_value,
-            divisible_test: divisible_test,
-            throw_to_monkey_if_true: throw_to_monkey_if_true,
-            throw_to_monkey_if_false: throw_to_monkey_if_false,
+            operation,
+            operation_value,
+            divisible_test,
+            throw_to_monkey_if_true,
+            throw_to_monkey_if_false,
             item_inspection_count: RefCell::new(0),
         };
         monkeys.push(monkey);
@@ -85,15 +96,20 @@ fn get_monkey_vec(input: String) -> Vec<Monkey> {
 }
 
 fn monkey_biz(rounds: i32, monkeys: &Vec<Monkey>, part2: bool) {
+    let lcd = calc_lcd(monkeys);
     for _ in 0..rounds {
+        // for each round
         for monkey in monkeys {
-            let mut items = monkey.items.borrow_mut();
+            // for each monkey
+            let mut items = monkey.items.borrow_mut(); // look at the items the monkey is holding
             items.reverse();
             while items.len() > 0 {
                 // monkey inspects *does operation*
-                let mut item = items.pop().unwrap();
+                let mut item = items.pop().unwrap(); // take the item
                 let operation = &monkey.operation;
                 let value = &monkey.operation_value;
+
+                // do the monkeys operaiton
                 match operation {
                     '+' => item += value,
                     '*' => item *= value,
@@ -101,8 +117,10 @@ fn monkey_biz(rounds: i32, monkeys: &Vec<Monkey>, part2: bool) {
                     _ => {}
                 }
 
-                // item / 3 round down nearest int
+                item %= lcd; // to keep the worry levels small
+
                 if !part2 {
+                    // in part 1 we divide each items worry level by 3
                     item /= 3;
                 }
 
@@ -125,17 +143,17 @@ fn monkey_biz(rounds: i32, monkeys: &Vec<Monkey>, part2: bool) {
 }
 
 fn get_monkey_biz_level(monkeys: &Vec<Monkey>) -> i64 {
+    // does the final calculation
     let mut monkey_inspection_counts: Vec<i64> = vec![];
 
     for monkey in monkeys {
         let count: i64 = *monkey.item_inspection_count.borrow() as i64;
-        println!("monkeys count is {count:?}");
         monkey_inspection_counts.push(count);
     }
     monkey_inspection_counts.sort();
     monkey_inspection_counts.reverse();
 
-    println!(" {monkey_inspection_counts:?}");
+    println!("the monkeys inspeciton counts are: {monkey_inspection_counts:?}");
 
     return monkey_inspection_counts[0] * monkey_inspection_counts[1];
 }
@@ -147,15 +165,14 @@ mod tests {
     fn test_part_1() {
         let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
         let input: String = std::fs::read_to_string(input_path).expect("can't read file");
-
-        let monkey_vec = get_monkey_vec(input);
-        assert_eq!(part_1(&monkey_vec), 10605);
+        // let monkey_vec = get_monkey_vec(input);
+        assert_eq!(part_1(input), 10605);
     }
     #[test]
     fn test_part_2() {
         let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
         let input: String = std::fs::read_to_string(input_path).expect("can't read file");
-        let monkey_vec = get_monkey_vec(input);
-        assert_eq!(part_2(&monkey_vec), 0);
+        // let monkey_vec = get_monkey_vec(input);
+        assert_eq!(part_2(input), 2713310158);
     }
 }
