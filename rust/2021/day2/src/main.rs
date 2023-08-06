@@ -1,6 +1,6 @@
 fn main() {
-    let input = std::fs::read_to_string("../../input/day2.txt").expect("can't read file");
-
+  let input_path = format!("../../../input/2021/{}", env!("CARGO_PKG_NAME"));
+  let input: String = std::fs::read_to_string(input_path).expect("can't read file");
     println!("{}", part_a(&input));
     println!("{}", part_b(&input));
 }

@@ -1,5 +1,5 @@
 
-with open("..\input\day7.txt", "r") as f:
+with open("..\input\day7", "r") as f:
     d = [int(x) for x in f.read().split(",")]
     d.sort()
 

@@ -1,4 +1,4 @@
-with open("..\input\day2.txt", "r") as f:
+with open("..\input\day2", "r") as f:
     d = f.read().split("\n")
     commands = [line.split(" ") for line in d]
 

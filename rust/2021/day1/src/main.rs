@@ -1,5 +1,6 @@
 fn main() {
-    let input = std::fs::read_to_string("../../input/day1.txt").expect("can't read file");
+    let input_path = format!("../../../input/2021/{}.txt", env!("CARGO_PKG_NAME"));
+    let input: String = std::fs::read_to_string(input_path).expect("can't read file");
     let nums: Vec<i32> = input
         .trim()
         .lines()

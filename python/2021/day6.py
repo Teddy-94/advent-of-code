@@ -1,4 +1,4 @@
-with open("..\input\day6.txt", "r") as f:
+with open("..\input\day6", "r") as f:
     fishes = [int(x) for x in f.read().split(",")]
     buckets = [0] * 9
 

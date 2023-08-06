@@ -11,7 +11,7 @@ struct Monkey {
 }
 
 fn main() {
-    let input_path = format!("../../input/{}.txt", env!("CARGO_PKG_NAME"));
+    let input_path = format!("../../../input/2022/{}.txt", env!("CARGO_PKG_NAME"));
     let input: String = std::fs::read_to_string(input_path).expect("can't read file");
     //   let monkey_vec = get_monkey_vec(input);
     // incredibly ugly bc this modivies the monkey vec in place instead of making new results...
@@ -47,7 +47,7 @@ fn calc_lcd(monkeys: &Vec<Monkey>) -> i64 {
 }
 
 fn get_monkey_vec(input: String) -> Vec<Monkey> {
-    let monkey_input: Vec<&str> = input.split("\r\n\r\n").collect::<Vec<&str>>();
+    let monkey_input: Vec<&str> = input.split("\n\n").collect::<Vec<&str>>();
     let mut monkeys: Vec<Monkey> = vec![];
 
     for input in monkey_input {
@@ -163,14 +163,14 @@ mod tests {
     use super::*;
     #[test]
     fn test_part_1() {
-        let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
+        let input_path = format!("../../../input/2022/{}_test.txt", env!("CARGO_PKG_NAME"));
         let input: String = std::fs::read_to_string(input_path).expect("can't read file");
         // let monkey_vec = get_monkey_vec(input);
         assert_eq!(part_1(input), 10605);
     }
     #[test]
     fn test_part_2() {
-        let input_path = format!("../../input/{}_test.txt", env!("CARGO_PKG_NAME"));
+        let input_path = format!("../../../input/2022/{}_test.txt", env!("CARGO_PKG_NAME"));
         let input: String = std::fs::read_to_string(input_path).expect("can't read file");
         // let monkey_vec = get_monkey_vec(input);
         assert_eq!(part_2(input), 2713310158);

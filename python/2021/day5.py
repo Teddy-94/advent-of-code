@@ -1,4 +1,4 @@
-with open("..\input\day5.txt", "r") as f:
+with open("..\input\day5", "r") as f:
     d = f.read().strip().splitlines()
 
     points = [line.split("->") for line in d]

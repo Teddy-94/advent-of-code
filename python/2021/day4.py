@@ -1,4 +1,4 @@
-with open("..\input\day4.txt", "r") as f:
+with open("..\input\day4", "r") as f:
     first, *rest = f.read().split("\n\n")
     # parse draws
     draws = [int(x) for x in first.strip().split(",")]

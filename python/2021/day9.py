@@ -1,4 +1,4 @@
-with open("..\input\day9.txt") as f:
+with open("..\input\day9") as f:
     d = f.read().strip().splitlines()
 
     grid = []
