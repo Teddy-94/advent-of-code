@@ -3,3 +3,5 @@ target/
 debug/
 .vscode/
 Cargo.lock
+.php-cs-fixer.cache
+
