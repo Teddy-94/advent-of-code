@@ -1,7 +1,8 @@
 These are my solutions for the advent of code challenges.
 
 Stars:
-* 2023: 0
+* 2024: 2
+* 2023: 1
 * 2022: 24
 * 2021: 20
 * 2020: 0
