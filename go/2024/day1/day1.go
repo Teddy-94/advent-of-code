@@ -1,4 +1,4 @@
-package main
+package day1
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func main() {
+func Run() {
 	file, err := os.ReadFile("../../input/2024/day1.txt")
 	if err != nil {
 		fmt.Println(err)
